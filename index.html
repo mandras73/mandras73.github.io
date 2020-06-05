@@ -9,6 +9,30 @@ layout: default
 
   <h2>Hello Kids!</h2>
 
+  <form name="form1" id="my_form" method="post" action="">
+      <fieldset id="Group1" name="Group1">
+      <legend>Group box</legend>
+      <div><label><input type="radio" name="group1" value="saas">SaaS</label></div>
+      <div><label><input type="radio" name="group1" value="managed">Managed</label></div>
+  	</fieldset><br/>
+  </form>
+
+  <div id="saas" class="desc">
+
+  <select id="cars-select" onchange="updateModels()">
+    <option value="" disabled selected>--- Monitored by ---</option>
+  </select>
+
+  <select id="models-select" onchange="updateConfigurations()">
+    <option value="" disabled selected>--- Application ---</option>
+    </select>
+
+  <select id="configurations-select" onchange="location = this.value;">
+    <option value="" disabled selected>--- Infrastructure ---</option>
+  </select>
+
+  </div>
+  <script src="./script.js"></script>
 
   {% if site.paginate %}
     {% assign posts = paginator.posts %}
