@@ -1,32 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Cascading Dropdown List using JSON data - Learn infinity</title>
 
-<script src="./jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
-<style type="text/css">
-    .desc { display: none; }
-</style>
+    <!-- Bootstrap Core Css -->
+    <link href="css/bootstrap.css" rel="stylesheet" />
 
-<form name="form1" id="my_form" method="post" action="" class="form-check">
-    <fieldset id="group" name="group">
-    <legend>Select the environment</legend>
-      <div><label><input type="radio" class="form-check-input" name="group1" value="saas"> SaaS</label></div>
-      <div><label><input type="radio" class="form-check-input" name="group1" value="managed"> Managed</label></div>
-  	</fieldset>
-  </form>
+	<!-- Bootstrap Select Css -->
+    <link href="css/bootstrap-select.css" rel="stylesheet" />
 
-  <div id="saas" class="desc">
+    <!-- Custom Css -->
+    <link href="css/app_style.css" rel="stylesheet" />
 
-  <select id="cars-select" class="form-control input-lg" onchange="updateModels()">
-    <option value="" disabled selected> 1 -- Monitored by ---</option>
-  </select>
+    <style type="text/css">
+        .desc { display: none; }
+    </style>
+</head>
+<body>
+    <div class="all-content-wrapper">
 
-  <select id="models-select" class="form-control input-lg" onchange="updateConfigurations()">
-    <option value="" disabled selected> 2 -- Application --</option>
-    </select>
 
-  <select id="configurations-select" class="form-control input-lg" onchange="location = this.value;">
-    <option value="" disabled selected> 3 -- Infrastructure --</option>
-  </select>
+		<section class="container">
+			<div class="form-group custom-input-space has-feedback">
+				<div class="page-body clearfix">
+					<div class="row">
+						<div class="col-md-offset-3 col-md-6">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+                  <div><label><input type="radio" class="form-check-input" name="group1" value="saas"> SaaS</label></div>
+                  <div><label><input type="radio" class="form-check-input" name="group1" value="managed"> Managed</label></div>
+                </div>
+								<div class="panel-body">
 
-  </div>
-  <script src="./script.js"></script>
+ <div id="saas" class="desc">
+									<form action="" method="POST">
+										<div class="form-group">
+											<label for="" class="required" >Brand :</label>
+											<select name="brand" id="brand" class="form-control">
+												<option value="">Select Brand</option>
+											</select>
+										</div>
+
+										<div class="form-group">
+											<label for="" class="required" >Category :</label>
+											<select name="category" id="category" class="form-control">
+												<option value="">Select Category</option>
+											</select>
+										</div>
+
+										<div class="form-group">
+											<label for="" class="required" >Product :</label>
+											<select name="product" id="product" class="form-control" onchange="location = this.value;">
+												<option value="">Select Product</option>
+											</select>
+										</div>
+
+									</form>
+</div>
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+		</section>
+    </div>
+
+	<!-- Jquery Core Js -->
+    <script src="js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core Js -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap Select Js -->
+    <script src="js/bootstrap-select.js"></script>
+
+	<script>
+
+	$(document).ready(function(e){
+
+	    function get_json_data(id, parent_id) {
+	        var html_code = '';
+	        $.getJSON('json_list.json', function(data) {
+	        	ListName = id.substr(0, 1).toUpperCase() + id.substr(1);
+	            html_code += '<option value="">Select ' + ListName + '</option>';
+	            $.each(data, function(key, value) {
+                    if (value.parent_id == parent_id) {
+                        html_code += '<option value="' + value.id + '">' + value.name + '</option>';
+                    }
+	            });
+	            $('#' + id).html(html_code);
+	        });
+
+	    }
+	    get_json_data('brand',0);
+
+	    $(document).on('change', '#brand', function() {
+	        var brand_id = $(this).val();
+	        if (brand_id != '') {
+	            get_json_data('category', brand_id);
+	        } else {
+	            $('#category').html('<option value="">Select category</option>');
+	        }
+	        $('#product').html('<option value="">Select Product</option>');
+	    });
+
+	    $(document).on('change', '#category', function() {
+	        var category_id = $(this).val();
+	        if (category_id != '') {
+	            get_json_data('product', category_id);
+	        } else {
+	            $('#product').html('<option value="">Select Variant</option>');
+	        }
+	    });
+
+
+	});
+	</script>
+</body>
+</html>
