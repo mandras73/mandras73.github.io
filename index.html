@@ -1,5 +1,7 @@
 
 <script src="./jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
 <style type="text/css">
     .desc { display: none; }
 </style>
@@ -14,15 +16,15 @@
 
   <div id="saas" class="desc">
 
-  <select id="cars-select" onchange="updateModels()">
+  <select id="cars-select" class="form-control input-lg" onchange="updateModels()">
     <option value="" disabled selected>--- Monitored by ---</option>
   </select>
 
-  <select id="models-select" onchange="updateConfigurations()">
+  <select id="models-select" class="form-control input-lg" onchange="updateConfigurations()">
     <option value="" disabled selected>-- Application --</option>
     </select>
 
-  <select id="configurations-select" onchange="location = this.value;">
+  <select id="configurations-select" class="form-control input-lg" onchange="location = this.value;">
     <option value="" disabled selected>-- Infrastructure --</option>
   </select>
 
